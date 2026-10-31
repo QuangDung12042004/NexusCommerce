@@ -1,0 +1,30 @@
+﻿# docker-compose.yml
+# Định nghĩa các container cần chạy cho project Nexus Commerce.
+
+services:
+  # ===== POSTGRESQL DATABASE =====
+  postgres:
+    # Image: dùng PostgreSQL version 16, bản alpine (nhẹ)
+    image: postgres:16-alpine
+
+    # Tên container (để dễ nhận biết khi chạy `docker ps`)
+    container_name: nexus_postgres
+
+    # Biến môi trường cấu hình cho PostgreSQL
+    environment:
+      POSTGRES_USER: nexus_user          # Tên đăng nhập
+      POSTGRES_PASSWORD: nexus_secret_123 # Mật khẩu
+      POSTGRES_DB: nexus_commerce        # Tên database sẽ được tạo tự động
+
+    # Port mapping: cổng 5432 trên máy em -> cổng 5432 trong container
+    # PostgreSQL mặc định chạy ở cổng 5432
+    ports:
+      - "5433:5432"
+
+    # Volume: gắn ổ cứng ngoài để data không mất khi container bị xóa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# Khai báo volume dùng chung
+volumes:
+  postgres_data:
