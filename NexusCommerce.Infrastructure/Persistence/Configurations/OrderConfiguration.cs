@@ -50,7 +50,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
 
         // ===== CONCURRENCY TOKEN =====
         builder.Property(o => o.RowVersion)
-            .IsRowVersion();
+            .IsConcurrencyToken();
 
         // ===== INDEXES =====
         // Unique index trên OrderCode → tra cứu đơn nhanh, không trùng mã.

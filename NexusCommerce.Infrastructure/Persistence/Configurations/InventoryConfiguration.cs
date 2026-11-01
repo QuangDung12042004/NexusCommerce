@@ -16,7 +16,7 @@ public class InventoryConfiguration : IEntityTypeConfiguration<Inventory>
         // Inventory là nơi xảy ra tranh chấp nhiều nhất (2 người cùng mua),
         // nên RowVersion ở đây CỰC KỲ quan trọng.
         builder.Property(i => i.RowVersion)
-            .IsRowVersion();
+            .IsConcurrencyToken();
 
         // ===== INDEX =====
         // Unique index trên ProductId → mỗi sản phẩm chỉ có 1 dòng inventory.

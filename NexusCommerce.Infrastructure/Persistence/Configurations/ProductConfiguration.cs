@@ -41,7 +41,7 @@ namespace NexusCommerce.Infrastructure.Persistence.Configurations
             // RowVersion dùng cho Optimistic Concurrency.
             // PostgreSQL dùng xmin, nhưng ta cấu hình IsRowVersion để EF tự xử lý.
             builder.Property(p => p.RowVersion)
-                .IsRowVersion();
+                .IsConcurrencyToken();
 
             // ===== INDEXES =====
             // Unique index trên Slug → không trùng slug, tìm kiếm nhanh.
