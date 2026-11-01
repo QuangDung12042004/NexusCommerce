@@ -28,6 +28,7 @@ namespace NexusCommerce.Domain.Enums
         /// <summary>
         /// khách đã huy đơn hàng
         /// </summary>
-        Canceled = 4
+        Canceled = 4,
+        Pending = 5
     }
 }
