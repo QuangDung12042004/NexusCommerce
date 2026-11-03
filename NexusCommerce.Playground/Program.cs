@@ -1,4 +1,7 @@
-﻿using NexusCommerce.Domain.Entities;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using NexusCommerce.Application.Common;
+using NexusCommerce.Domain.Entities;
 using NexusCommerce.Domain.Exceptions;
 
 Console.WriteLine("=== TEST RICH DOMAIN MODEL ===\n");
@@ -37,3 +40,28 @@ catch (DomainException ex)
 }
 
 Console.WriteLine("\n=== TẤT CẢ TEST HOÀN TẤT ===");
+
+Console.WriteLine("\n=== SMOKE TEST MEDIATR ===\n");
+
+// 1. Tạo "container" chứa các service
+var services = new ServiceCollection();
+
+// Đăng ký logging mà MediatR cần dùng
+services.AddLogging();
+
+// 2. Đăng ký MediatR: quét assembly chứa PingQuery (= Application assembly)
+//    → tự động tìm và đăng ký MỌI Handler trong assembly đó
+services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(PingQuery).Assembly));
+
+// 3. Build container → thành Service Provider
+var provider = services.BuildServiceProvider();
+
+// 4. Lấy Mediator ra
+var sender = provider.GetRequiredService<ISender>();
+
+// 5. Gửi request → Mediator tự route tới PingQueryHandler
+var result = await sender.Send(new PingQuery());
+
+Console.WriteLine($"✅ Mediator trả về: {result}");
+Console.WriteLine("\n=== SMOKE TEST HOÀN TẤT ===");

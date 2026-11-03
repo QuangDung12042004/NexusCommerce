@@ -2,6 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NexusCommerce.Domain\NexusCommerce.Domain.csproj" />
+    <ProjectReference Include="..\NexusCommerce.Application\NexusCommerce.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.14" />
   </ItemGroup>
 
   <PropertyGroup>
