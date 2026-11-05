@@ -1,0 +1,35 @@
+﻿name: CI
+
+# KHI NÀO chạy: mỗi lần push hoặc mở PR vào nhánh main
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest     # máy ảo miễn phí của GitHub (Linux)
+
+    steps:
+      # 1. Lấy source code về máy ảo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Cài .NET SDK 8
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # 3. Restore packages
+      - name: Restore
+        run: dotnet restore
+
+      # 4. Build ở chế độ Release
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      # 5. (Tuần 4 sẽ bật) Chạy unit tests
+      # - name: Test
+      #   run: dotnet test --no-build --configuration Release
